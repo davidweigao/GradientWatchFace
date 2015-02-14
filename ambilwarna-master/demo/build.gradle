@@ -1,0 +1,24 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion propCompileSdkVersion
+    buildToolsVersion propBuildToolsVersion
+
+    defaultConfig {
+        applicationId 'yuku.ambilwarna.demo'
+        minSdkVersion propMinSdkVersion
+        targetSdkVersion propTargetSdkVersion
+        versionCode propVersionCode
+        versionName propVersionName
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile project(':library')
+}

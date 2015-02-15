@@ -4,40 +4,109 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/pickColor1Button"
-        android:layout_width="100dp"
-        android:layout_height="70dp"/>
-
-    <Button
-        android:id="@+id/pickColor2Button"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
-        />
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="send"
-        android:id="@+id/sendButton"/>
-    <Button
-        android:id="@+id/styleButton"
-        android:text="style"
+        android:orientation="horizontal">
+
+        <gaowei.textwatchface.WatchView
+            android:id="@+id/watchViewNormal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+
+        <gaowei.textwatchface.WatchView
+            android:id="@+id/watchViewAmbient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="Start Color: "/>
+
+                <Button
+                    android:id="@+id/pickColor1Button"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="End Color: "/>
+
+                <Button
+                    android:id="@+id/pickColor2Button"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"/>
+
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="Text Color: "/>
+
+                <Button
+                    android:id="@+id/pickColorTextButton"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"/>
+
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancel"/>
+
+                <Button
+                    android:id="@+id/updateButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Update"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
 
-    <gaowei.textwatchface.WatchView
-        android:id="@+id/watchView"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
-        android:layout_gravity="center"/>
-
-
+        </ScrollView>
 
 </LinearLayout>

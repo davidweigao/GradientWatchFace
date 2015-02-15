@@ -23,6 +23,7 @@ import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.Wearable;
 
+import gaowei.commom.GradientWatchFaceService;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 /**
@@ -34,10 +35,6 @@ public class GradientWatchFaceConfigActivity extends Activity
 
     private static final String TAG = "ConfigActivity";
     private static final String PATH_WITH_FEATURE = "/aaaaa/bbbbb";
-    static final String KEY_COLOR_1 = "gaowei.watchface.gradientwatchface_color1";
-    static final String KEY_COLOR_2 = "gaowei.watchface.gradientwatchface_color2";
-    static final String KEY_TIME_STYLE = "gaowei.watchface.gradientwatchface.timestyle";
-
 
 
     private GoogleApiClient mGoogleApiClient;
@@ -45,12 +42,14 @@ public class GradientWatchFaceConfigActivity extends Activity
     private Button sendButton;
     private Button pickColor1Button;
     private Button pickColor2Button;
-    private Button styleButton;
-    private WatchView watchView;
-    private int color1;
-    private int color2;
+    private Button pickColorTextButton;
+    private Button cancelButton;
+    private WatchView watchViewNormal;
+    private WatchView watchViewAmbient;
 
-    private int style = 1;
+    private DataMap config = new DataMap();
+
+
     @Override
     public void onConnected(Bundle bundle) {
         if (true) {
@@ -77,16 +76,21 @@ public class GradientWatchFaceConfigActivity extends Activity
                 .addApi(Wearable.API)
                 .build();
         setContentView(R.layout.activity_gradient_watchface_config);
-        sendButton = (Button) findViewById(R.id.sendButton);
+        sendButton = (Button) findViewById(R.id.updateButton);
         pickColor1Button = (Button) findViewById(R.id.pickColor1Button);
         pickColor2Button = (Button) findViewById(R.id.pickColor2Button);
+        pickColorTextButton = (Button) findViewById(R.id.pickColorTextButton);
+        cancelButton = (Button) findViewById(R.id.cancelButton);
         sendButton.setOnClickListener(this);
         pickColor1Button.setOnClickListener(this);
         pickColor2Button.setOnClickListener(this);
-        styleButton = (Button) findViewById(R.id.styleButton);
-        styleButton.setOnClickListener(this);
-        watchView = (WatchView) findViewById(R.id.watchView);
+        pickColorTextButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
 
+        watchViewNormal = (WatchView) findViewById(R.id.watchViewNormal);
+        watchViewAmbient = (WatchView) findViewById(R.id.watchViewAmbient);
+        watchViewAmbient.setAmbient(true);
+        updateWatchViews();
 
 
     }
@@ -155,7 +159,28 @@ public class GradientWatchFaceConfigActivity extends Activity
      *         default items are selected.
      */
     private void setUpAllPickers(DataMap config) {
+        this.config.putAll(config);
+        pickColor1Button.setBackgroundColor(config.getInt(GradientWatchFaceService.KEY_COLOR_1));
+        pickColor2Button.setBackgroundColor(config.getInt(GradientWatchFaceService.KEY_COLOR_2));
+        pickColorTextButton.setBackgroundColor(config.getInt(GradientWatchFaceService.KEY_COLOR_TEXT));
+        updateWatchViews();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(watchViewAmbient != null) {
+            watchViewAmbient.setAmbient(true);
+        }
+    }
+
+    private void updateWatchViews() {
+        if(watchViewNormal != null) {
+            watchViewNormal.setConfig(config);
+        }
+        if(watchViewAmbient != null) {
+            watchViewAmbient.setConfig(config);
+        }
     }
 
     private void sendConfigUpdateMessage(String configKey, int color) {
@@ -173,11 +198,19 @@ public class GradientWatchFaceConfigActivity extends Activity
         }
     }
 
+    private void sendConfig() {
+        if (mPeerId != null) {
+            byte[] rawData = config.toByteArray();
+            Wearable.MessageApi.sendMessage(mGoogleApiClient, mPeerId, PATH_WITH_FEATURE, rawData);
+        }
+    }
+
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.pickColor1Button:
             case R.id.pickColor2Button:
+            case R.id.pickColorTextButton:
                 AmbilWarnaDialog.OnAmbilWarnaListener listener = new AmbilWarnaDialog.OnAmbilWarnaListener() {
                     @Override
                     public void onCancel(AmbilWarnaDialog dialog) {
@@ -188,26 +221,23 @@ public class GradientWatchFaceConfigActivity extends Activity
                     public void onOk(AmbilWarnaDialog dialog, int color) {
                         v.setBackgroundColor(color);
                         if(v.getId() == R.id.pickColor1Button) {
-                            color1 = color;
-                            watchView.setColor1(color);
+                            config.putInt(GradientWatchFaceService.KEY_COLOR_1, color);
+                        } else if(v.getId() == R.id.pickColorTextButton) {
+                            config.putInt(GradientWatchFaceService.KEY_COLOR_TEXT, color);
+                        } else {
+                            config.putInt(GradientWatchFaceService.KEY_COLOR_2, color);
                         }
-                        else {
-                            color2 = color;
-                            watchView.setColor2(color);
-                        }
+                        updateWatchViews();
                     }
                 };
                 new AmbilWarnaDialog(GradientWatchFaceConfigActivity.this,0,listener).show();
                 break;
-            case R.id.sendButton:
-                sendConfigUpdateMessage(KEY_COLOR_1, color1);
-                sendConfigUpdateMessage(KEY_COLOR_2, color2);
+            case R.id.updateButton:
+                sendConfig();
                 break;
-            case R.id.styleButton:
-                sendConfigUpdateMessage(KEY_TIME_STYLE, style++);
-                if(style > 3) style = 1;
+            case R.id.cancelButton:
+                finish();
                 break;
-
         }
     }
 }

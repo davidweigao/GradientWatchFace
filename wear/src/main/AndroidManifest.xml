@@ -8,7 +8,7 @@
 
 
 
-        <service android:name=".MyWatchFaceService"
+        <service android:name="gaowei.commom.MyWatchFaceService"
             android:label="myFace"
             android:allowEmbedded="true"
             android:taskAffinity=""
@@ -29,7 +29,7 @@
                 android:resource="@drawable/preview_my_circular" />
         </service>
 
-        <service android:name=".GradientWatchFaceService"
+        <service android:name="gaowei.commom.GradientWatchFaceService"
             android:label="Gradient Watch Face"
             android:allowEmbedded="true"
             android:taskAffinity=""
@@ -52,7 +52,7 @@
                 android:name="com.google.android.wearable.watchface.companionConfigurationAction"
                 android:value="gaowei.watchface.CONFIG_GRADIENT" />
         </service>
-        <service android:name=".DigitalWatchFaceConfigListenerService">
+        <service android:name="gaowei.commom.DigitalWatchFaceConfigListenerService">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>

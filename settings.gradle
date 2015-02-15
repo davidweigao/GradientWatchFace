@@ -1,1 +1,1 @@
-include ':mobile', ':wear', ':colorpicker'
+include ':mobile', ':wear', ':colorpicker', ':commom'

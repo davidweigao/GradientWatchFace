@@ -4,104 +4,75 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <gaowei.textwatchface.WatchView
             android:id="@+id/watchViewNormal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            />
 
-        <gaowei.textwatchface.WatchView
-            android:id="@+id/watchViewAmbient"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/pickColor1Button"
+                style="@style/ColorPickerLayout">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Start Color: "/>
+                    style="@style/ConfigTitleTextView"
+                    android:text="@string/start_color_picker"/>
 
-                <Button
-                    android:id="@+id/pickColor1Button"
-                    android:layout_width="120dp"
-                    android:layout_height="70dp"/>
+            </RelativeLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/pickColor2Button"
+                style="@style/ColorPickerLayout">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="End Color: "/>
+                    style="@style/ConfigTitleTextView"
+                    android:text="@string/end_color_picker"/>
 
-                <Button
-                    android:id="@+id/pickColor2Button"
-                    android:layout_width="120dp"
-                    android:layout_height="70dp"/>
+            </RelativeLayout>
 
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/pickColorTextButton"
+                style="@style/ColorPickerLayout">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Text Color: "/>
+                    style="@style/ConfigTitleTextView"
+                    android:text="@string/text_color_picker"/>
 
-                <Button
-                    android:id="@+id/pickColorTextButton"
-                    android:layout_width="120dp"
-                    android:layout_height="70dp"/>
-
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <LinearLayout
+                android:id="@+id/bottomButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <Button
                     android:id="@+id/cancelButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    style="@style/ButtomButton"
                     android:text="Cancel"/>
 
                 <Button
                     android:id="@+id/updateButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    style="@style/ButtomButton"
                     android:text="Update"/>
+
             </LinearLayout>
 
         </LinearLayout>

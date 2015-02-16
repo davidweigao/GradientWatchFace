@@ -59,7 +59,8 @@ public class WatchView extends View {
 //        drawWatch(canvas, new Rect(0, 0, width, height));
         if(isAmbient)
             engine.onAmbientModeChanged(true);
-        GradientWatchFaceService.drawWatch(canvas, new Rect(0, 0, width, height), mTime, engine.getBackgroundArtist(), engine.getTimeDigitsArtist(), engine.getHourDigitPaint());
+        GradientWatchFaceService.drawWatch(canvas, new Rect(0, 0, width, height),
+                mTime, engine.getBackgroundArtist(), engine.getTimeDigitsArtist());
     }
 
     @Override
@@ -79,11 +80,16 @@ public class WatchView extends View {
         engine.setDimension(width,width);
         if(config == null || config.keySet().size() == 0) {
             config = new DataMap();
-            config.putInt(GradientWatchFaceService.KEY_COLOR_1,GradientWatchFaceService.DEFAULT_COLOR_1);
-            config.putInt(GradientWatchFaceService.KEY_COLOR_2,GradientWatchFaceService.DEFAULT_COLOR_2);
-            config.putInt(GradientWatchFaceService.KEY_BG_STYLE,GradientWatchFaceService.DEFAULT_BG_STYLE);
-            config.putInt(GradientWatchFaceService.KEY_TIME_STYLE,GradientWatchFaceService.DEFAULT_TIME_STYLE);
-            config.putInt(GradientWatchFaceService.KEY_COLOR_TEXT,GradientWatchFaceService.DEFAULT_COLOR_TEXT);
+            config.putInt(GradientWatchFaceService.KEY_COLOR_1,
+                    GradientWatchFaceService.DEFAULT_COLOR_1);
+            config.putInt(GradientWatchFaceService.KEY_COLOR_2,
+                    GradientWatchFaceService.DEFAULT_COLOR_2);
+            config.putInt(GradientWatchFaceService.KEY_BG_STYLE,
+                    GradientWatchFaceService.DEFAULT_BG_STYLE);
+            config.putInt(GradientWatchFaceService.KEY_TIME_STYLE,
+                    GradientWatchFaceService.DEFAULT_TIME_STYLE);
+            config.putInt(GradientWatchFaceService.KEY_COLOR_TEXT,
+                    GradientWatchFaceService.DEFAULT_COLOR_TEXT);
         }
         engine.updateUiForConfigDataMap(config);
         engine.setView(this);
@@ -93,9 +99,13 @@ public class WatchView extends View {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
     }
 
+    public void updateConfig(DataMap config) {
+        this.config = config;
+        engine.updateUiForConfigDataMap(config);
+    }
+
     public void setConfig(DataMap config) {
         this.config = config;
-            engine.updateUiForConfigDataMap(config);
     }
 
 

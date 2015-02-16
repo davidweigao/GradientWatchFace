@@ -3,16 +3,13 @@ package gaowei.textwatchface;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Config;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,6 +21,7 @@ import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.Wearable;
 
 import gaowei.commom.GradientWatchFaceService;
+import gaowei.commom.Utility;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 /**
@@ -35,17 +33,18 @@ public class GradientWatchFaceConfigActivity extends Activity
 
     private static final String TAG = "ConfigActivity";
     private static final String PATH_WITH_FEATURE = "/aaaaa/bbbbb";
+    private static final int REQUEST_CODE_STYLE = 1;
 
 
     private GoogleApiClient mGoogleApiClient;
     private String mPeerId;
-    private Button sendButton;
-    private Button pickColor1Button;
-    private Button pickColor2Button;
-    private Button pickColorTextButton;
+    private Button updateButton;
+    private View pickColor1Button;
+    private View pickColor2Button;
+    private View pickColorTextButton;
     private Button cancelButton;
     private WatchView watchViewNormal;
-    private WatchView watchViewAmbient;
+    private boolean isInitialized = false;
 
     private DataMap config = new DataMap();
 
@@ -56,13 +55,16 @@ public class GradientWatchFaceConfigActivity extends Activity
             Log.d(TAG, "onConnected: " + bundle);
         }
 
-        if (mPeerId != null) {
-            Uri.Builder builder = new Uri.Builder();
-            Uri uri = builder.scheme("wear").path(PATH_WITH_FEATURE).authority(mPeerId).build();
-            Wearable.DataApi.getDataItem(mGoogleApiClient, uri).setResultCallback(this);
-        } else {
-            displayNoConnectedDeviceDialog();
+        if(!isInitialized) {
+            if (mPeerId != null) {
+                Uri.Builder builder = new Uri.Builder();
+                Uri uri = builder.scheme("wear").path(PATH_WITH_FEATURE).authority(mPeerId).build();
+                Wearable.DataApi.getDataItem(mGoogleApiClient, uri).setResultCallback(this);
+            } else {
+                displayNoConnectedDeviceDialog();
+            }
         }
+
     }
 
     @Override
@@ -76,20 +78,19 @@ public class GradientWatchFaceConfigActivity extends Activity
                 .addApi(Wearable.API)
                 .build();
         setContentView(R.layout.activity_gradient_watchface_config);
-        sendButton = (Button) findViewById(R.id.updateButton);
-        pickColor1Button = (Button) findViewById(R.id.pickColor1Button);
-        pickColor2Button = (Button) findViewById(R.id.pickColor2Button);
-        pickColorTextButton = (Button) findViewById(R.id.pickColorTextButton);
+        updateButton = (Button) findViewById(R.id.updateButton);
+        pickColor1Button =  findViewById(R.id.pickColor1Button);
+        pickColor2Button =  findViewById(R.id.pickColor2Button);
+        pickColorTextButton =  findViewById(R.id.pickColorTextButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
-        sendButton.setOnClickListener(this);
+        updateButton.setOnClickListener(this);
         pickColor1Button.setOnClickListener(this);
         pickColor2Button.setOnClickListener(this);
         pickColorTextButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
 
         watchViewNormal = (WatchView) findViewById(R.id.watchViewNormal);
-        watchViewAmbient = (WatchView) findViewById(R.id.watchViewAmbient);
-        watchViewAmbient.setAmbient(true);
+        watchViewNormal.setOnClickListener(this);
         updateWatchViews();
 
 
@@ -126,6 +127,7 @@ public class GradientWatchFaceConfigActivity extends Activity
 
     @Override
     public void onResult(DataApi.DataItemResult dataItemResult) {
+        isInitialized = true;
         if (dataItemResult.getStatus().isSuccess() && dataItemResult.getDataItem() != null) {
             DataItem configDataItem = dataItemResult.getDataItem();
             DataMapItem dataMapItem = DataMapItem.fromDataItem(configDataItem);
@@ -160,26 +162,15 @@ public class GradientWatchFaceConfigActivity extends Activity
      */
     private void setUpAllPickers(DataMap config) {
         this.config.putAll(config);
-        pickColor1Button.setBackgroundColor(config.getInt(GradientWatchFaceService.KEY_COLOR_1));
-        pickColor2Button.setBackgroundColor(config.getInt(GradientWatchFaceService.KEY_COLOR_2));
-        pickColorTextButton.setBackgroundColor(config.getInt(GradientWatchFaceService.KEY_COLOR_TEXT));
+        pickColor1Button.setBackgroundColor(this.config.getInt(GradientWatchFaceService.KEY_COLOR_1));
+        pickColor2Button.setBackgroundColor(this.config.getInt(GradientWatchFaceService.KEY_COLOR_2));
+        pickColorTextButton.setBackgroundColor(this.config.getInt(GradientWatchFaceService.KEY_COLOR_TEXT));
         updateWatchViews();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(watchViewAmbient != null) {
-            watchViewAmbient.setAmbient(true);
-        }
     }
 
     private void updateWatchViews() {
         if(watchViewNormal != null) {
-            watchViewNormal.setConfig(config);
-        }
-        if(watchViewAmbient != null) {
-            watchViewAmbient.setConfig(config);
+            watchViewNormal.updateConfig(config);
         }
     }
 
@@ -237,6 +228,22 @@ public class GradientWatchFaceConfigActivity extends Activity
                 break;
             case R.id.cancelButton:
                 finish();
+                break;
+            case R.id.watchViewNormal:
+                Intent intent = new Intent(this, SelectStyleActivity.class);
+                Utility.addData(intent , config);
+                startActivityForResult(intent, REQUEST_CODE_STYLE);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_STYLE:
+                if(resultCode == RESULT_OK) {
+                    setUpAllPickers(Utility.getDataMap(data));
+                }
                 break;
         }
     }

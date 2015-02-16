@@ -221,7 +221,15 @@ public class GradientWatchFaceConfigActivity extends Activity
                         updateWatchViews();
                     }
                 };
-                new AmbilWarnaDialog(GradientWatchFaceConfigActivity.this,0,listener).show();
+                int currentColor;
+                if(v.getId() == R.id.pickColor1Button) {
+                    currentColor = config.getInt(GradientWatchFaceService.KEY_COLOR_1);
+                } else if(v.getId() == R.id.pickColorTextButton) {
+                    currentColor = config.getInt(GradientWatchFaceService.KEY_COLOR_TEXT);
+                } else {
+                    currentColor = config.getInt(GradientWatchFaceService.KEY_COLOR_2);
+                }
+                new AmbilWarnaDialog(GradientWatchFaceConfigActivity.this,currentColor,listener).show();
                 break;
             case R.id.updateButton:
                 sendConfig();

@@ -48,7 +48,6 @@ public class WatchView extends View {
 
     public WatchView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         mTime = new Time();
 
     }
@@ -56,7 +55,6 @@ public class WatchView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        drawWatch(canvas, new Rect(0, 0, width, height));
         if(isAmbient)
             engine.onAmbientModeChanged(true);
         GradientWatchFaceService.drawWatch(canvas, new Rect(0, 0, width, height),

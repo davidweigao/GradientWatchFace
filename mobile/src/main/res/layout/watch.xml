@@ -5,8 +5,9 @@
 
     <gaowei.textwatchface.WatchView
         android:id="@+id/watchView"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="12dp"
         android:layout_centerInParent="true"
         />
 

@@ -8,26 +8,26 @@
 
 
 
-        <service android:name="gaowei.commom.MyWatchFaceService"
-            android:label="myFace"
-            android:allowEmbedded="true"
-            android:taskAffinity=""
-            android:permission="android.permission.BIND_WALLPAPER">
-            <intent-filter>
-                <action android:name="android.service.wallpaper.WallpaperService" />
-                <category
-                    android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.service.wallpaper"
-                android:resource="@xml/watch_face" />
-            <meta-data
-                android:name="com.google.android.wearable.watchface.preview"
-                android:resource="@drawable/preview_my" />
-            <meta-data
-                android:name="com.google.android.wearable.watchface.preview_circular"
-                android:resource="@drawable/preview_my_circular" />
-        </service>
+        <!--<service android:name="gaowei.commom.MyWatchFaceService"-->
+            <!--android:label="myFace"-->
+            <!--android:allowEmbedded="true"-->
+            <!--android:taskAffinity=""-->
+            <!--android:permission="android.permission.BIND_WALLPAPER">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.service.wallpaper.WallpaperService" />-->
+                <!--<category-->
+                    <!--android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />-->
+            <!--</intent-filter>-->
+            <!--<meta-data-->
+                <!--android:name="android.service.wallpaper"-->
+                <!--android:resource="@xml/watch_face" />-->
+            <!--<meta-data-->
+                <!--android:name="com.google.android.wearable.watchface.preview"-->
+                <!--android:resource="@drawable/preview_my" />-->
+            <!--<meta-data-->
+                <!--android:name="com.google.android.wearable.watchface.preview_circular"-->
+                <!--android:resource="@drawable/preview_my_circular" />-->
+        <!--</service>-->
 
         <service android:name="gaowei.commom.GradientWatchFaceService"
             android:label="Gradient Watch Face"
@@ -44,10 +44,10 @@
                 android:resource="@xml/watch_face" />
             <meta-data
                 android:name="com.google.android.wearable.watchface.preview"
-                android:resource="@drawable/preview_my" />
+                android:resource="@drawable/preview_gradient" />
             <meta-data
                 android:name="com.google.android.wearable.watchface.preview_circular"
-                android:resource="@drawable/preview_my_circular" />
+                android:resource="@drawable/preview_gradient" />
             <meta-data
                 android:name="com.google.android.wearable.watchface.companionConfigurationAction"
                 android:value="gaowei.watchface.CONFIG_GRADIENT" />

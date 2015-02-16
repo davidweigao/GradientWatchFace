@@ -93,16 +93,8 @@ public abstract class BaseWatchFaceService extends CanvasWatchFaceService {
             super.onAmbientModeChanged(inAmbientMode);
             invalidate();
             updateTimer();
+            isAmbient = inAmbientMode;
         }
-
-        @Override
-        public void onPropertiesChanged(Bundle properties) {
-            Log.e(TAG, "onPropertiesChanged");
-            super.onPropertiesChanged(properties);
-            isAmbient = properties.getBoolean(WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false);
-        }
-
-
 
         @Override
         public void onVisibilityChanged(boolean visible) {

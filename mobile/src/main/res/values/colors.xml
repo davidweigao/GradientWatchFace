@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="button_pressed">#ffff0000</color>
-    <color name="button_not_pressed">#77ff0000</color>
-
+    <color name="button_pressed">#ffffffff</color>
+    <color name="button_not_pressed">#ffAAAAAA</color>
 </resources>

@@ -26,7 +26,9 @@ public class ColockTimeDigitsArtist extends InLineDigitsArtist {
 
         drawTime(canvas, path, hour, mHourTextRect, hourDegree);
         drawTime(canvas, path, min, mMinTextRect, minDegree);
-        drawTime(canvas, path, sec, mSecTextRect, secondDegree);
+        if(MODE_NORMAL == mode) {
+            drawTime(canvas, path, sec, mSecTextRect, secondDegree);
+        }
     }
 
     private void drawTime(Canvas canvas, Path path, int digits, RectF rect, float degree) {

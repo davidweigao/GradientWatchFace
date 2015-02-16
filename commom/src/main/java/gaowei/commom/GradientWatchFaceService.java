@@ -3,6 +3,7 @@ package gaowei.commom;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Build;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.text.TextPaint;
@@ -96,6 +97,7 @@ public class GradientWatchFaceService extends BaseWatchFaceService{
                     mTimeDigitsArtist = new TextTimeDigitsArtist(width, height, mColorText);
                     break;
             }
+            mTimeDigitsArtist.setMode(isInAmbientMode() ? TimeDigitsArtist.MODE_AMBIENT : TimeDigitsArtist.MODE_NORMAL);
 
         }
 
@@ -106,6 +108,8 @@ public class GradientWatchFaceService extends BaseWatchFaceService{
                     mBackgroundArtist = new RainbowBackgroundArtist(width, height, mColor1, mColor2);
                     break;
             }
+            mBackgroundArtist.setMode(isInAmbientMode() ? TimeDigitsArtist.MODE_AMBIENT : TimeDigitsArtist.MODE_NORMAL);
+
         }
 
         @Override
@@ -189,6 +193,7 @@ public class GradientWatchFaceService extends BaseWatchFaceService{
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
             Log.e(TAG, "onDraw()");
+            Log.e("ManuFacturer :", Build.MANUFACTURER);
             drawWatch(canvas, bounds, mTime, mBackgroundArtist, mTimeDigitsArtist);
         }
 

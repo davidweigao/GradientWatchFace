@@ -28,9 +28,12 @@ public class BouncyTimeDigitsArtist extends InLineDigitsArtist {
         path.addArc(mMinTextRect, -105+ getRandomAngle(10), 30);
         canvas.drawTextOnPath("" + min, path, 0, mOffSet, paint);
         // sec
-        path.reset();
-        path.addArc(mSecTextRect, -100+ getRandomAngle(15), 30);
-        canvas.drawTextOnPath("" + sec, path, 0, mOffSet, paint);
+        if(mode == MODE_NORMAL) {
+            path.reset();
+            path.addArc(mSecTextRect, -100+ getRandomAngle(15), 30);
+            canvas.drawTextOnPath("" + sec, path, 0, mOffSet, paint);
+        }
+
     }
 
     private float getRandomAngle( int around) {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TextWatchFace</string>
+    <string name="app_name">GradientWatchFace</string>
     <string name="start_color_picker">Start Color:</string>
     <string name="end_color_picker">End Color:</string>
     <string name="text_color_picker">Text Color:</string>

@@ -15,5 +15,4 @@ The main watch functionality is based on Android sample watchface project.
 
 ... to be continue
 
-![sc_1](https://cloud.githubusercontent.com/assets/1740687/6242865/b392def2-b704-11e4-80c5-27f7905bcc07.png)
-![sc_2](https://cloud.githubusercontent.com/assets/1740687/6242866/b39370ce-b704-11e4-8f99-86c300cdb8d1.png)
+![qq 20150218004152](https://cloud.githubusercontent.com/assets/1740687/6242997/16863610-b707-11e4-8f7d-eda7129fd36d.png)
